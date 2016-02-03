@@ -1,0 +1,40 @@
+CODE 
+1:   call main, 0
+2:   exit 
+3:   PROCBEGIN gcd
+4:   alloc 9
+5:   move 0, %3
+6:   beq ^%1, %3, 8
+7:   goto 11
+8:   ltof ^%0, %4
+9:   move %4, _2
+10:   goto 22
+11:   move ^%0, %2
+12:   bge %2, ^%1, 14
+13:   goto 17
+14:   sub %2, ^%1, %5
+15:   move %5, %2
+16:   goto 12
+17:   param %1
+18:   param @%2
+19:   call gcd, 2
+20:   move _2, %8
+21:   move %8, _2
+22:   free 9
+23:   PROCEND 
+24:   PROCBEGIN main
+25:   alloc 4
+26:   print "Waiting for input: "
+27:   inp _1
+28:   print "Waiting for input: "
+29:   inp _0
+30:   bgt _1, _0, 32
+31:   goto 38
+32:   param @_1
+33:   param @_0
+34:   call gcd, 2
+35:   move _2, _3
+36:   foutp _3
+37:   newl 
+38:   free 4
+39:   PROCEND 

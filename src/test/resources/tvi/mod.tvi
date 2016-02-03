@@ -1,0 +1,15 @@
+CODE
+0:  call main, 0
+1:  exit
+2:  PROCBEGIN main
+3:  alloc 8
+4:  move 2.0, _7
+5:  move _7, _6
+6:  print "location _6 contains "
+7:  foutp _6
+8:  newl
+9:  print "location _7 contains "
+10:  foutp _7
+11:  newl
+12:  free 8
+13:  PROCEND
