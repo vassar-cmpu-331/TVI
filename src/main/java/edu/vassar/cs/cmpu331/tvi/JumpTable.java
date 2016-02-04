@@ -20,20 +20,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Keith Suderman
+ * The JumpTable maps the name of a procedure to
+ * its index in the list of instructions.
+ *
  */
 public class JumpTable
 {
 	private Map<String, Integer> table = new HashMap<>();
 
-	public JumpTable()
-	{
-
-	}
-
 	public void set(String name, int offset) {
 		if (table.get(name) != null) {
-//			throw new TVIError(name + " has already been defined.");
 			throw TVIError.LABEL_REDEFINED(name);
 		}
 		table.put(name, offset);

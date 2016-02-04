@@ -18,9 +18,6 @@ package edu.vassar.cs.cmpu331.tvi;
 
 import java.security.PrivilegedActionException;
 
-/**
- * @author Keith Suderman
- */
 public class TVIError extends RuntimeException
 {
 	/**

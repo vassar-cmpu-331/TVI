@@ -1,0 +1,9 @@
+CODE
+0:   move 3, _0
+1:   uminus _0, _1
+2:   outp _1
+3:   newl
+4:  ltof _1, _2
+5:  foutp _2,
+6:  newl
+7:   exit

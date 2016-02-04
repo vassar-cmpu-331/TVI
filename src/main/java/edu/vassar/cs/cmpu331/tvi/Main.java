@@ -81,9 +81,9 @@ public class Main
 		Function<String,String> trim = s -> {
 			int i = s.indexOf(':');
 			if (i > 0) {
-				return s.substring(i + 1);
+				return s.substring(i + 1).trim();
 			}
-			return " " + s.trim();
+			return s.trim();
 		};
 		List<String> list = Files.lines(file)
 				  .filter(line -> !line.startsWith("CODE"))
@@ -115,6 +115,7 @@ public class Main
 			cpu.enableTracing();
 		}
 		if (debugging) {
+			System.out.println("Debug output enabled.");
 			cpu.enableDebug();
 		}
 
@@ -154,7 +155,7 @@ public class Main
 		System.out.println(COPYRIGHT);
 		System.out.println();
 		HelpFormatter out = new HelpFormatter();
-		out.printHelp("java -jar tvi-" + Version.getVersion() + ".jar [-t|--trace] [-s|--size <int>] <file>...", options);
+		out.printHelp("java -jar tvi-" + Version.getVersion() + ".jar [options] <file> [<file>...]", options);
 		System.out.println();
 	}
 	public static void main(String[] args) {

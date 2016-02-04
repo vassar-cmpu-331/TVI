@@ -24,10 +24,37 @@ import static java.lang.System.out;
 public class Experiments
 {
 	@Test
+	public void streamSideEffects() {
+		List<Integer> list = new ArrayList<>();
+		IntStream.range(0, 1000).forEach(list::add);
+		list.forEach(System.out::println);
+	}
+
+	@Test
+	public void parallelStreamSideEffects() {
+		List<Integer> list = new ArrayList<>();
+		List<Integer> source = IntStream.range(0, 1000)
+				  .boxed()
+				  .collect(Collectors.toList());
+		source.parallelStream().forEach(list::add);
+		list.forEach(System.out::println);
+	}
+
+	@Test
+	public void vectorStreamSideEffects() {
+		List<Integer> list = new Vector<>();
+		List<Integer> source = IntStream.range(0, 1000)
+				  .boxed()
+				  .collect(Collectors.toList());
+		source.parallelStream().forEach(list::add);
+		list.forEach(System.out::println);
+	}
+
+	@Test
 	public void threadSafeCollections() {
 		List<Integer> list = IntStream.range(1, 1000)
 				  .parallel()
-				  .mapToObj(Integer::valueOf)
+				  .boxed()
 				  .collect(Collectors.toList());
 
 		System.out.println(list.getClass().getName());
@@ -103,7 +130,18 @@ public class Experiments
 
 	}
 
+	@Test
+	public void compareString() {
+		assertFalse("READ" == new String("READ")); //.toUpperCase());
+	}
+
+	@Test
+	public void compareInternedString() {
+		assertTrue("READ" == new String("READ").intern()); //.toUpperCase());
+	}
+
 	private String identity(String input) { return input; }
+
 
 	private <T extends Number> T decode(String input, Function<String,T> factory) {
 		System.out.println("T is a " + factory.getClass().getName());

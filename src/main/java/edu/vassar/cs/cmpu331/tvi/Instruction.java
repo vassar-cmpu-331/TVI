@@ -16,13 +16,11 @@
 
 package edu.vassar.cs.cmpu331.tvi;
 
-import edu.vassar.cs.cmpu331.tvi.memory.Operand;
-
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
- * @author Keith Suderman
+ *
  */
 public class Instruction
 {
@@ -126,26 +124,26 @@ public class Instruction
 		return builder.toString();
 	}
 
-	private Operand parse(String operand, int start, int end) {
-		int offset;
-		switch (operand.charAt(start)) {
-			case '^':
-				break;
-			case '@':
-				break;
-			case '%':
-				offset = Integer.parseInt(operand.substring(1));
-				break;
-			case '_':
-				break;
-			case '"':
-				break;
-			default:
-
-
-		}
-		return null;
-	}
+//	private Operand parse(String operand, int start, int end) {
+//		int offset;
+//		switch (operand.charAt(start)) {
+//			case '^':
+//				break;
+//			case '@':
+//				break;
+//			case '%':
+//				offset = Integer.parseInt(operand.substring(1));
+//				break;
+//			case '_':
+//				break;
+//			case '"':
+//				break;
+//			default:
+//
+//
+//		}
+//		return null;
+//	}
 
 	private Opcode translate(String opcode)
 	{

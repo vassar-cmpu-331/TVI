@@ -20,15 +20,14 @@ import java.io.*;
 import java.util.Arrays;
 
 /**
- * @author Keith Suderman
  */
-public class Cell
+public class Memory
 {
 	public static final int SIZE = 8;
 
 	private byte[] storage = new byte[SIZE];
 
-	public Cell()
+	public Memory()
 	{
 
 	}

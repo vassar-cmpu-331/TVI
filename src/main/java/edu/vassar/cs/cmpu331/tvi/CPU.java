@@ -26,9 +26,6 @@ import java.util.stream.Stream;
 
 import static edu.vassar.cs.cmpu331.tvi.Opcode.*;
 
-/**
- * @author Keith Suderman
- */
 public class CPU
 {
 	public static final int DEFAULT_MEMORY_SIZE = 1024*1024;
@@ -53,7 +50,7 @@ public class CPU
 	/** Pointer the the next memory location used by param/push. */
 	private int top;
 
-	private Cell[] memory;
+	private Memory[] memory;
 
 	public CPU() {
 		this(DEFAULT_MEMORY_SIZE);
@@ -63,9 +60,9 @@ public class CPU
 	{
 		this.instructions = new ArrayList<>();
 		this.ip = this.fp = this.top = 0;
-		this.memory = Stream.generate(Cell::new)
+		this.memory = Stream.generate(Memory::new)
 				  .limit(size)
-				  .toArray(Cell[]::new);
+				  .toArray(Memory[]::new);
 		jump = new JumpTable();
 		callStack = new Stack<>();
 	}
@@ -213,6 +210,7 @@ public class CPU
 			case DUMP:
 				trace(instruction);
 				i1 = decodeInt(instruction.getOperand(0));
+				System.out.println(String.format("IP:%d FP:%d TOF:%d TOP:%d", ip, fp, tof, top));
 				IntStream.range(0, i1)
 						  .mapToObj(i -> i + ": " + memory[i].toString())
 						  .forEach(System.out::println);
@@ -300,7 +298,13 @@ public class CPU
 					i1 = decodeInt(op1);
 					writeTo(i1, instruction.getOperand(1));
 				}
-				else if (isAddress(op1) || looksLikeAFloat(op1)) {
+				else if (isAddress(op1)) {
+//					f1 = decodeFloat(op1);
+//					writeTo(f1, instruction.getOperand(1));
+					i1 = decodeInt(op1);
+					writeTo(i1, instruction.getOperand(1));
+				}
+				else if (looksLikeAFloat(op1)) {
 					f1 = decodeFloat(op1);
 					writeTo(f1, instruction.getOperand(1));
 				}
@@ -338,6 +342,7 @@ public class CPU
 				System.out.print(message.substring(1, end));
 				break;
 			case PROCEND:
+				trace(instruction);
 				if (callStack.isEmpty()) {
 					throw TVIError.EMPTY_STACK();
 				}
@@ -364,6 +369,58 @@ public class CPU
 				i2 = decodeInt(instruction.getOperand(1));
 				writeTo(i1 - i2, instruction.getOperand(2));
 				break;
+			case UMINUS:
+				trace(instruction);
+				i1 = decodeInt(instruction.getOperand(0));
+				writeTo(-i1, instruction.getOperand(1));
+				break;
+		}
+	}
+
+	private int parse(String input) {
+		return parse(input, 0);
+	}
+	private int parse(String input, int offset) {
+		return Integer.parseInt(input.substring(offset));
+	}
+
+	private void move(Instruction instruction) {
+		// Temporary buffer so we can easily read/write bytes.
+		Memory cell = new Memory();
+		String source = instruction.getOperand(0);
+		String destination = instruction.getOperand(1);
+		if (source.startsWith("@_")) {
+			// Address of global memory is the address given.
+			cell.write(parse(source, 2));
+		}
+		else if (source.startsWith("@%")) {
+			// Address of local memory is the provided address + the FP.
+			cell.write(parse(source, 2) + fp);
+		}
+		else if (source.startsWith("_")) {
+			// Global memory value
+			int address = parse(source, 1);
+
+		}
+		else if (source.startsWith("%")) {
+			// Local memory value
+		}
+		else if (source.startsWith("^_")) {
+			// Dereference a global memory location.
+		}
+		else if (source.startsWith("^%")) {
+			// Dereference a local memory location.
+
+		}
+		else if (source.startsWith("^_")) {
+			// Dereference a local memory location.
+
+		}
+		else if (looksLikeAFloat(source)) {
+			// Floating point literal value.
+		}
+		else {
+			// Integer literal.
 		}
 	}
 
@@ -383,31 +440,35 @@ public class CPU
 	}
 
 	private void writeTo(int value, String address) {
-		int index;
-		if (address.startsWith("%")) {
-			index = Integer.parseInt(address.substring(1)) + fp;
-		}
-		else if (address.startsWith("_")) {
-			index = Integer.parseInt(address.substring(1)) + fp;
-		}
-		else {
-			throw TVIError.ADDRESS_NOT_WRITABLE(address);
-		}
+		int index = decodeAddress(address);
 		memory[index].write(value);
 	}
 
 	private void writeTo(float value, String address) {
-		int index;
-		if (address.startsWith("%")) {
+		int index = decodeAddress(address);
+		memory[index].write(value);
+	}
+
+	private int decodeAddress(String address) {
+		int index = -1;
+		if (address.startsWith("^%")) {
+			index = Integer.parseInt(address.substring(2)) + fp;
+			index = memory[index].readInt();
+		}
+		else if (address.startsWith("^_")) {
+			index = Integer.parseInt(address.substring(2));
+			index = memory[index].readInt();
+		}
+		else if (address.startsWith("%")) {
 			index = Integer.parseInt(address.substring(1)) + fp;
 		}
 		else if (address.startsWith("_")) {
-			index = Integer.parseInt(address.substring(1)) + fp;
+			index = Integer.parseInt(address.substring(1));
 		}
 		else {
 			throw TVIError.ADDRESS_NOT_WRITABLE(address);
 		}
-		memory[index].write(value);
+		return index;
 	}
 
 	private int decodeInt(String input) {

@@ -16,9 +16,6 @@
 
 package edu.vassar.cs.cmpu331.tvi;
 
-/**
- * @author Keith Suderman
- */
 public class StackFrame
 {
 	private int ip;

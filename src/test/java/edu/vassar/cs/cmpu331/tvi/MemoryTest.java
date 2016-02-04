@@ -6,18 +6,29 @@ import static org.junit.Assert.*;
 /**
  * @author Keith Suderman
  */
-public class CellTest
+public class MemoryTest
 {
-	Cell cell;
+	Memory memory;
 
 	@Before
 	public void setup() {
-		cell = new Cell();
+		memory = new Memory();
 	}
 
 	@After
 	public void cleanup() {
-		cell = null;
+		memory = null;
+	}
+
+	@Test
+	public void copyFloats() {
+		memory.write(3.14f);
+		int t = memory.readInt();
+		Memory temp = new Memory();
+		temp.write(t);
+		Float f = temp.readFloat();
+
+		assertEquals(3.14f, f, 0.00001);
 	}
 
 	@Test
@@ -41,14 +52,14 @@ public class CellTest
 	}
 
 	private void test(int expected) {
-		cell.write(expected);
-		int actual = cell.readInt();
+		memory.write(expected);
+		int actual = memory.readInt();
 		assertEquals(expected, actual);
 	}
 
 	private void test(float expected) {
-		cell.write(expected);
-		float actual = cell.readFloat();
+		memory.write(expected);
+		float actual = memory.readFloat();
 		assertEquals(expected, actual, 0.0001);
 	}
 }
