@@ -11,8 +11,8 @@ TVI 2.0.0 is a Java implementation of the original C++ interpreter used previous
 To build the interpreter from scratch download the code and compile with Maven.
  
 ```bash
-$> git clone https://github.com/vassar-cmpu-331/tvi.git
-$> cd tvi
+$> git clone https://github.com/vassar-cmpu-331/TVI.git
+$> cd TVI
 $> mvn package
 ```
  
@@ -20,7 +20,7 @@ If you would like to change the name of the project directory simply specify the
 the repository:
 
 ```bash
-$> git clone https://github.com/vassar-cmpu-331/tvi.git my_directory
+$> git clone https://github.com/vassar-cmpu-331/TVI.git my_directory
 $> cd my_directory
 $> mvn package
 ```
