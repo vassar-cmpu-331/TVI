@@ -62,7 +62,7 @@ Sets the size of the memory pool the interpreter.  The default is 1M memory loca
  **WARNING**
  The `--renumber` option only renumbers the lines; it **DOES NOT** back-patch any `goto` statements; so this option will break your .tvi file if it contains `goto` statements.
  
- ## Problems or Bugs
+## Problems or Bugs
  
- Please [open a new issue](https://github.com/vassar-cmpu-331/tvi/issues) if (when) you find any bugs in the interpreter.
+Please [open a new issue](https://github.com/vassar-cmpu-331/tvi/issues) if (when) you find any bugs in the interpreter.
  
