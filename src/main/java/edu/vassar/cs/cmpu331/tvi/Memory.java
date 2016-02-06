@@ -23,7 +23,7 @@ import java.util.Arrays;
  */
 public class Memory
 {
-	public static final int SIZE = 8;
+	public static final int SIZE = 4;
 
 	private byte[] storage = new byte[SIZE];
 
