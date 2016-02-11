@@ -277,13 +277,16 @@ public class CPU
 			case INVALID:
 				throw TVIError.INVALID_OPCODE();
 				//break;
+			// load src, off, dest      ;  move from src+offset into dest
 			case LOAD:
 				trace(instruction);
 				//source
-				i1 = decodeInt(instruction.getOperand(0));
+//				i1 = decodeInt(instruction.getOperand(0));
+				i1 = decodeAddress(instruction.getOperand(0));
 				//offset
 				i2 = decodeInt(instruction.getOperand(1));
 				i3 = readInt(i1 + i2);
+				debug("src:%d off:%d value:%d dest:%s", i1, i2, i3);
 				writeTo(i3, instruction.getOperand(2));
 				break;
 			case LTOF:
@@ -352,15 +355,18 @@ public class CPU
 				fp = frame.fp();
 				debug("Returning to %d", ip);
 				break;
+			// store src, offset, dest  ; move from src into dest + offset
 			case STOR:
 				trace(instruction);
 				// src
 				i1 = decodeInt(instruction.getOperand(0));
 				// offset
 				i2 = decodeInt(instruction.getOperand(1));
-				// dest
-				i3 = decodeInt(instruction.getOperand(2));
-				debug("src: %d, offset: %d, dest: %d", i1, i2, i3);
+				// base
+				i3 = decodeAddress(instruction.getOperand(2));
+//				i3 = decodeInt(instruction.getOperand(2));
+//				i3 = memory[13].readInt();
+				debug("value: %d, offset: %d, base: %d", i1, i2, i3);
 				memory[i2 + i3].write(i1);
 				break;
 			case SUB:

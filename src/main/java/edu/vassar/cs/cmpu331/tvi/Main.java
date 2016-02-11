@@ -158,6 +158,7 @@ public class Main
 		out.printHelp("java -jar tvi-" + Version.getVersion() + ".jar [options] <file> [<file>...]", options);
 		System.out.println();
 	}
+
 	public static void main(String[] args) {
 		Options options = new Options()
 				  .addOption("t", "trace", false, "Enable tracing.")

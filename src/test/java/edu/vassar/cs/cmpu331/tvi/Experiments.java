@@ -9,11 +9,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.text.SimpleDateFormat;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.lang.System.out;
 
@@ -23,43 +22,6 @@ import static java.lang.System.out;
 @Ignore
 public class Experiments
 {
-	@Test
-	public void streamSideEffects() {
-		List<Integer> list = new ArrayList<>();
-		IntStream.range(0, 1000).forEach(list::add);
-		list.forEach(System.out::println);
-	}
-
-	@Test
-	public void parallelStreamSideEffects() {
-		List<Integer> list = new ArrayList<>();
-		List<Integer> source = IntStream.range(0, 1000)
-				  .boxed()
-				  .collect(Collectors.toList());
-		source.parallelStream().forEach(list::add);
-		list.forEach(System.out::println);
-	}
-
-	@Test
-	public void vectorStreamSideEffects() {
-		List<Integer> list = new Vector<>();
-		List<Integer> source = IntStream.range(0, 1000)
-				  .boxed()
-				  .collect(Collectors.toList());
-		source.parallelStream().forEach(list::add);
-		list.forEach(System.out::println);
-	}
-
-	@Test
-	public void threadSafeCollections() {
-		List<Integer> list = IntStream.range(1, 1000)
-				  .parallel()
-				  .boxed()
-				  .collect(Collectors.toList());
-
-		System.out.println(list.getClass().getName());
-		list.forEach(System.out::println);
-	}
 
 	@Test
 	public void generateOpcodes() throws IOException
