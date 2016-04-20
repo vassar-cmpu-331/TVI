@@ -281,7 +281,6 @@ public class CPU
 			case LOAD:
 				trace(instruction);
 				//source
-//				i1 = decodeInt(instruction.getOperand(0));
 				i1 = decodeAddress(instruction.getOperand(0));
 				//offset
 				i2 = decodeInt(instruction.getOperand(1));
@@ -302,8 +301,6 @@ public class CPU
 					writeTo(i1, instruction.getOperand(1));
 				}
 				else if (isAddress(op1)) {
-//					f1 = decodeFloat(op1);
-//					writeTo(f1, instruction.getOperand(1));
 					i1 = decodeInt(op1);
 					writeTo(i1, instruction.getOperand(1));
 				}
@@ -364,8 +361,6 @@ public class CPU
 				i2 = decodeInt(instruction.getOperand(1));
 				// base
 				i3 = decodeAddress(instruction.getOperand(2));
-//				i3 = decodeInt(instruction.getOperand(2));
-//				i3 = memory[13].readInt();
 				debug("value: %d, offset: %d, base: %d", i1, i2, i3);
 				memory[i2 + i3].write(i1);
 				break;
@@ -383,52 +378,52 @@ public class CPU
 		}
 	}
 
-	private int parse(String input) {
-		return parse(input, 0);
-	}
-	private int parse(String input, int offset) {
-		return Integer.parseInt(input.substring(offset));
-	}
+//	private int parse(String input) {
+//		return parse(input, 0);
+//	}
+//	private int parse(String input, int offset) {
+//		return Integer.parseInt(input.substring(offset));
+//	}
 
-	private void move(Instruction instruction) {
-		// Temporary buffer so we can easily read/write bytes.
-		Memory cell = new Memory();
-		String source = instruction.getOperand(0);
-		String destination = instruction.getOperand(1);
-		if (source.startsWith("@_")) {
-			// Address of global memory is the address given.
-			cell.write(parse(source, 2));
-		}
-		else if (source.startsWith("@%")) {
-			// Address of local memory is the provided address + the FP.
-			cell.write(parse(source, 2) + fp);
-		}
-		else if (source.startsWith("_")) {
-			// Global memory value
-			int address = parse(source, 1);
-
-		}
-		else if (source.startsWith("%")) {
-			// Local memory value
-		}
-		else if (source.startsWith("^_")) {
-			// Dereference a global memory location.
-		}
-		else if (source.startsWith("^%")) {
-			// Dereference a local memory location.
-
-		}
-		else if (source.startsWith("^_")) {
-			// Dereference a local memory location.
-
-		}
-		else if (looksLikeAFloat(source)) {
-			// Floating point literal value.
-		}
-		else {
-			// Integer literal.
-		}
-	}
+//	private void move(Instruction instruction) {
+//		// Temporary buffer so we can easily read/write bytes.
+//		Memory cell = new Memory();
+//		String source = instruction.getOperand(0);
+//		String destination = instruction.getOperand(1);
+//		if (source.startsWith("@_")) {
+//			// Address of global memory is the address given.
+//			cell.write(parse(source, 2));
+//		}
+//		else if (source.startsWith("@%")) {
+//			// Address of local memory is the provided address + the FP.
+//			cell.write(parse(source, 2) + fp);
+//		}
+//		else if (source.startsWith("_")) {
+//			// Global memory value
+//			int address = parse(source, 1);
+//
+//		}
+//		else if (source.startsWith("%")) {
+//			// Local memory value
+//		}
+//		else if (source.startsWith("^_")) {
+//			// Dereference a global memory location.
+//		}
+//		else if (source.startsWith("^%")) {
+//			// Dereference a local memory location.
+//
+//		}
+//		else if (source.startsWith("^_")) {
+//			// Dereference a local memory location.
+//
+//		}
+//		else if (looksLikeAFloat(source)) {
+//			// Floating point literal value.
+//		}
+//		else {
+//			// Integer literal.
+//		}
+//	}
 
 	private boolean looksLikeAFloat(String s) {
 		return s.contains(".") || s.contains("e");
