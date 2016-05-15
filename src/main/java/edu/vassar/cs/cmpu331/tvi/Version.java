@@ -6,7 +6,7 @@ package edu.vassar.cs.cmpu331.tvi;
  */
 public final class Version
 {
-	private static final String version = "2.0.0-SNAPSHOT";
+	private static final String version = "2.1.0";
 
 	public static String getVersion() { return version; }
 }

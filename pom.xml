@@ -6,8 +6,25 @@
 
     <groupId>edu.vassar.cs.cmpu331</groupId>
     <artifactId>tvi</artifactId>
-    <version>2.0.0</version>
-
+    <version>2.1.0</version>
+    <name>The Vassar Interpreter</name>
+    <description>A simple interpreter for the psuedo-code generated in CMPU-331</description>
+    <url>https://github.com/vassar-cmpu-331/TVI</url>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/vassar-cmpu-331/TVI</url>
+        <connection>scm:git:https://github.com/vassar-cmpu-331/TVI.git</connection>
+        <developerConnection>scm:git:https://github.com/vassar-cmpu-331/TVI.git</developerConnection>
+    </scm>
+    <issueManagement>
+        <url>https://github.com/vassar-cmpu-331/TVI/issues</url>
+        <system>GitHub issues</system>
+    </issueManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

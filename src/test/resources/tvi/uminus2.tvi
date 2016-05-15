@@ -1,0 +1,13 @@
+CODE
+1:  call MAIN, 0
+2:  exit
+3:  PROCBEGIN MAIN
+4:  alloc 3
+5:  move 1.0, _2
+6:  fuminus _2, _1
+7:  move _1, _0
+8:  print "A = "
+9:  foutp _0
+10:  newl
+11:  free 3
+12:  PROCEND
