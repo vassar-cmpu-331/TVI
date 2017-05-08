@@ -261,6 +261,8 @@ public class CPU
 				break;
 			case FTOL:
 				trace(instruction);
+				f1 = decodeFloat(instruction.getOperand(0));
+				writeTo((int) f1, instruction.getOperand(1));
 				break;
 			case FUMINUS:
 				trace(instruction);
